@@ -1,7 +1,8 @@
 // Importations
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/users');
+const userController = require('../controllers/user');
+const auth = require('../middlewares/auth');
 
 // Inscription
 router.post('/auth/signup', userController.signup);

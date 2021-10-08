@@ -1,7 +1,6 @@
+const db = require("../models/Comment");
 const Comment = db.Comment;
-const User = db.User;
-const Post = db.Post;
-const LikePost = db.Like_Post;
+
 
 
 exports.addComment = (req, res, next) => {

@@ -1,7 +1,5 @@
+const db = require("../models/Post");
 const Post = db.Post;
-const User = db.User;
-const Comment = db.Comment;
-const LikePost = db.Like_Post;
 
 exports.createPost = (req, res, next) => {
 	// Valid request
