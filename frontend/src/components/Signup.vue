@@ -26,11 +26,10 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
 export default {
-	emits: ["createAccount"],
 	name: "SignUp",
 	setup() {
 		const email = ref("");
@@ -52,6 +51,11 @@ export default {
 		const account = ref("");
 		const firstField = ref(null);
 
+		onMounted( () => {
+			firstField.value.focus();
+		})
+
+
 
 
 		//Validation des champs: calculer la valeur isFormValid pour enable le bouton 'create account'
@@ -65,7 +69,6 @@ export default {
 
     const createUser = () => { 
         axios.post ('http://localhost:3000/api/auth/signup', {
-
 				email : email.value,
 				lastName : lastName.value,
 				firstName : firstName.value,
@@ -73,13 +76,22 @@ export default {
 				admin : account.value
 			}) .then(function (data) {
                 console.log(data);
+					resetForm();
                 })
                 .catch(function (error) {
                     console.log(error) ;
                     });
-     
-	
 	}
+
+			function resetForm() {
+			email.value = "",
+			firstName.value = "",
+			lastName.value = "",
+			password.value = "",
+			// Focus sur le 1er input après submit
+			firstField.value.focus();
+		}
+
     return { email, firstField, lastName, firstName, password, accountTypes, account, isFormValid, createUser };
     }
 };
@@ -127,21 +139,7 @@ export default {
 			}
 		}
 	}
-	.confirmSignUp {
-		width: 400px;
-		padding: 2% 1%;
-		background-color: #42b983;
-		border: 1px solid #d6e9c6;
-		border-radius: 4px;
-		font: white;
 
-		a {
-			text-decoration: underline;
-			color: #AB1F03;
-			font-weight: bold;
-			cursor: pointer;
-		}
-	}
 
 	@media screen and (max-width: 1200px) {
 		h1 {

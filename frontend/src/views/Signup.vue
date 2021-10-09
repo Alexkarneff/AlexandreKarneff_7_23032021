@@ -1,15 +1,10 @@
 <template>
 	<body>
-
-		<div class="loginForm">
-			<div class="confirmSignUp" v-show="created">
-				<p>Your account has been created.</p>
-			</div>
-
+		<div class="signupForm">
 			<div class="signFormContainer">
 				<Signup/>
-				<p class="toLogIn">Already have an account? 
-					<router-link to="/login">Log in</router-link>
+				<p class="toLogIn">Vous avez déja un compte ?
+					<router-link to="/login">Se connecter</router-link>
 				</p>
 			</div>
 		</div>
@@ -37,57 +32,15 @@ export default {
 		align-content: center;
 
 	}
-	.logoContainer {
-		width: 35%;
-		margin: 0 auto;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: white;
-	}
-	img {
-		width: 280px;
-		height: 100%;
-		// border: 1px red dashed;
-	}
 	
-	div.loginForm {
-		width: 100%;
-		
+	div.signupForm {
+		width: 100%;	
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		// border-left: 1px red dashed;
 	}
 
-	.confirmSignUp {
-		height: 40px;
-		border: 1px solid #d6e9c6;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-style: italic;
-		width: 70%;
-		margin: 60px auto 50px;
-
-		p {
-			display: inline-block;
-			font-size: 18px;
-			margin: 0 15px 0;
-		}
-
-		a {
-			font-style: normal;
-			color: #AB1F03;
-
-			&:hover {
-				font-weight: bold;
-				cursor: pointer;
-				text-decoration: none;
-			}
-		}
-	}
 
 	.signFormContainer {
 		height: 600px;
@@ -123,7 +76,7 @@ export default {
 				top: 3%;
 				width: 110px;
 			}
-			.loginForm {
+			.signupForm {
 				width: 100%;
 				position: absolute;
 				top: 20%;

@@ -1,13 +1,22 @@
 const express = require('express');
 const path = require('path');
 const db = require("./models");
+
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const commentRoutes = require('./routes/comment');
 
 
+
+
 // Création App
 const app = express();
+
+db.sequelize.sync().then(result => {
+	// db.sequelize.sync({ force: true }).then(result => {
+	console.log(result);
+}).catch( error =>  { console.log(error )});
+
 
 // Cors
 app.use((req, res, next) => {

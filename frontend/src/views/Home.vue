@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/icon.svg">
+    <img class="logo" alt="Vue logo" src="../assets/icon.svg">
     <Home msg="Welcome to Groupomania"/>
   </div>
 </template>
@@ -16,3 +16,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+.logo {
+  width: 40%;
+}
+
+</style>

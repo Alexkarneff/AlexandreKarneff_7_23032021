@@ -13,7 +13,6 @@ exports.signup = (req, res, next) => {
     //hash du mot de passe
     .hash(req.body.password, 10)
     .then((hash) => {
-      console.log(hash);
       user
         .create({
           email: req.body.email,
@@ -31,7 +30,8 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  console.log(req.body);
+  User.findOne({ where:{ email: req.body.email} })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
@@ -44,10 +44,20 @@ exports.login = (req, res, next) => {
             return res.status(401).json({ error: "Mot de passe incorrect !" });
           }
           res.status(200).json({
-            userId: user._id,
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", {
+              user: {
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: req.body.email,
+                password: req.body.password,
+                description: user.description,
+                admin: user.admin,
+              },
+
+            token: jwt.sign({ id: user._id }, "RANDOM_TOKEN_SECRET", {
               expiresIn: "24h",
             }),
+            message: "Vous êtes connecté!"
           });
         })
         .catch((error) => res.status(500).json({ error }));
