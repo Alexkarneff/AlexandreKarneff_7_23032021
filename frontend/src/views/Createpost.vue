@@ -45,7 +45,7 @@ h3 {
   line-height: 40px;
 }
 
-.userActionsContainer {
+.formCreate {
   font-size: 16px;
   width: 90%;
   margin: 80px auto 60px;
@@ -75,31 +75,6 @@ h3 {
   }
 }
 
-div.submissionSuccess,
-div.deletePostSuccess {
-  height: 40px;
-  background-color: #42b983;
-  border: 1px solid #d6e9c6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  h4 {
-    margin: 0;
-  }
-}
-
-.wallContainer {
-  width: 60%;
-  margin: 10px auto 40px;
-  padding: 2% 0;
-  // border: 1px solid black;
-
-  .post {
-    margin-bottom: 40px;
-  }
-}
-
 @media screen and (max-width: 1200px) {
   .home {
     width: 100%;
@@ -111,13 +86,6 @@ div.deletePostSuccess {
       margin: 20px auto;
     }
 
-    .userActionsContainer {
-      width: 75%;
-    }
-
-    .wallContainer {
-      width: 70%;
-    }
   }
 }
 
@@ -149,29 +117,6 @@ div.deletePostSuccess {
       font-size: 16px;
     }
 
-    .userActionsContainer {
-      width: 80%;
-
-      .filterBox {
-        width: 200px;
-        font-size: 14px;
-        height: 30px;
-      }
-
-      button {
-        width: 120px;
-        font-size: 14px;
-      }
-    }
-
-    div.submissionSuccess,
-    div.deletePostSuccess {
-      font-size: 14px;
-    }
-
-    .wallContainer {
-      width: 80%;
-    }
   }
 }
 </style>
