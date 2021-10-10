@@ -4,10 +4,6 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.STRING,
 			allowNull: false
 		},
-		postDate: {
-			type: Sequelize.DATE,
-			allowNull: false
-		},
 		text: {
 			type: Sequelize.TEXT,
 		},

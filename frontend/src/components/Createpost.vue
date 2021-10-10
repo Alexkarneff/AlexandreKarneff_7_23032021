@@ -1,26 +1,18 @@
 <template>
 <!-- eslint-disable  -->
-	<h1>Inscrivez vous </h1>
 
-	<form v-on:submit.prevent="createUser">
-		<label for="email"></label>
-		<input type="text" v-model="email" placeholder="Entrez votres adresse mail" id="email" ref="firstField"><br/>
+	<form v-on:submit.prevent="createPost">
+		<label for="title"></label>
+		<input type="text" v-model="title" placeholder="Titre" id="title" ref="firstField"><br/>
 
-		<label for="firstName"></label>
-		<input type="text" v-model="firstName" id="firstName" placeholder="Entrez votre prénom"><br/>
+		<label for="content"></label>
+		<input type="text" v-model="content" id="content" placeholder="Votre post"><br/>
+
+        	<label for="image"></label>
+		<input type="img" v-model="image" id="image" placeholder="Votre image (si nécessaire)"><br/>
 		
-		<label for="lastName"></label>
-		<input type="text" v-model="lastName" id="lastName" placeholder="Entrez votre nom"><br/>
-
-		<label for="password"></label>
-		<input type="text" v-model="password" id="password" placeholder="Choisissez un mot de passe"><br/>
-
-		<label for="account">Account</label><br/>
-		<select v-model="account" id="account">
-			<option v-for="account in accountTypes" :value="account.value" :key="account.id">{{ account.name }}</option>
-		</select><br/>
 		
-		<button :disabled="!isFormValid">Créer mon compte</button>
+		<button :disabled="!isFormValid">Poster !</button>
 	</form>
 	
 </template>
@@ -30,50 +22,29 @@ import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 
 export default {
-	name: "SignUp",
+	name: "createPost",
 	setup() {
-		const email = ref("");
-		const lastName = ref("");
-		const firstName = ref("");
-		const password = ref("");
-		const accountTypes = ref([
-			{
-				id: 1,
-				name: 'Default',
-				value: 0
-			},
-			{
-				id: 2,
-				name: 'Admin',
-				value: 1
-			}
-		]);
-		const account = ref("");
+		const title = ref("");
+		const content = ref("");
+        const image = ref("");
 		const firstField = ref(null);
 
 		onMounted( () => {
 			firstField.value.focus();
 		})
-
-
-
-
 		//Validation des champs: calculer la valeur isFormValid pour enable le bouton 'create account'
 		const isFormValid = computed(() => {
-			if (email.value !== "" && firstName.value !== "" && lastName.value !== "" && password.value !== "" && account.value !== "") {
+			if (title.value !== "") {
 				return true;
 			} else {
 				return false;
 			}
 		})
 
-    const createUser = () => { 
-        axios.post ('http://localhost:3000/api/auth/signup', {
-				email : email.value,
-				lastName : lastName.value,
-				firstName : firstName.value,
-				password : password.value,
-				admin : account.value
+    const createPost = () => { 
+        axios.post ('http://localhost:3000/api/posts', {
+				title : title.value,
+				content : content.value,
 			}) .then(function (data) {
                 console.log(data);
 					resetForm();
@@ -84,14 +55,12 @@ export default {
 	}
 
 			function resetForm() {
-			email.value = "",
-			firstName.value = "",
-			lastName.value = "",
-			password.value = "",
+			title.value = "",
+			content.value = "",
 			firstField.value.focus();
 		}
 
-    return { email, firstField, lastName, firstName, password, accountTypes, account, isFormValid, createUser };
+    return {title, content, image, isFormValid, createPost };
     }
 };
 
@@ -104,7 +73,7 @@ export default {
 		text-align: left;
 		color: #182D80;
 	}
-	form {
+form {
 		width: 85%;
 		margin: 10px auto;
 		text-align: left;

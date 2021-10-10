@@ -1,5 +1,7 @@
 //import { def } from '@vue/shared';
 import { createStore } from 'vuex'
+//import { user } from '../../../backend/models';
+
 
 
 let state = {
@@ -25,6 +27,13 @@ SET_TOKEN(state, token) {
 
 SET_POSTS(state, posts) {
   state.posts = posts;
+},
+
+CLEAR_STORE(state) {
+  state.posts = [],
+  state.user = {},
+  state.token = '',
+  state.userLogged = false
 }
 
 };

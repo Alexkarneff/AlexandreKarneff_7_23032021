@@ -10,13 +10,14 @@
 		<input v-model="password" id="password" type="password" placeholder="Enter your password" required><br/>
 		
 		
-		<button :disabled="!isFormValid">Log in</button>
+		<button :disabled="!isFormValid">Connexion</button>
 		
 	</form>
 </template>
 
 <script>
 import { ref, onMounted, computed } from 'vue';
+import {useRoute, useRouter} from 'vue-router';
 import axios from 'axios';
 
 export default {
@@ -25,7 +26,9 @@ export default {
 		const email = ref("");
 		const password = ref("");
 		const firstField = ref(null);
-
+		const route = useRoute();
+		const router = useRouter();
+		
 		// Focus de la souris sur le 1er champ text au chargement de la page
 		onMounted( () => {
 			firstField.value.focus();
@@ -48,12 +51,27 @@ export default {
 				email : email.value,
 				password : password.value,
 			}) .then(function (data) {
+				resetForm();
+				goToPostList();
                 console.log(data);
                 })
                 .catch(function (error) {
                     console.log(error) ;
                     });	
 	}
+
+	
+			function resetForm() {
+			email.value = "",
+			password.value = "",
+			// Focus sur le 1er input après submit
+			firstField.value.focus()
+			}
+
+			const goToPostList = () => {
+			const redirectPost = route.query.redirect || '/post';
+			router.push(redirectPost);
+		}
 
 		return { email, firstField, password, isFormValid, logInUser };
 	}
@@ -91,7 +109,7 @@ export default {
 			outline: none;
 		}
 		button {
-			width: 100px;
+			width: 150px;
 			margin: 30px auto 0;
 			height: auto;
 			padding: 2% 1%;

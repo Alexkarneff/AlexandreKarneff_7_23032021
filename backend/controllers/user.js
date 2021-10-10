@@ -28,7 +28,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    console.log(req.body);
+    
     User.findOne({ where: { email: req.body.email } })
         .then((user) => {
             if (!user) {
@@ -51,13 +51,14 @@ exports.login = (req, res, next) => {
                             description: user.description,
                             admin: user.admin,
                         },
-
                         token: jwt.sign({ id: user._id }, "RANDOM_TOKEN_SECRET", {
                             expiresIn: "24h",
                         }),
                         message: "Vous êtes connecté!"
                     });
+                    console.log(user);
                 })
+                
                 .catch((error) => res.status(500).json({ error }));
         })
         .catch((error) => res.status(500).json({ error }));

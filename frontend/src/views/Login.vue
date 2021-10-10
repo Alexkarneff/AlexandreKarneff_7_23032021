@@ -2,9 +2,10 @@
 	<body>
 		<div class="loginContainer">
 			<div class="logFormContainer">
-				<Login/>
+				<Login @loginUser="userLogged"/>
 				<p class="toSignUp">Vous n'avez pas encore de compte? 
 					<router-link to="/signup">Rejoignez nous</router-link>
+					
 				</p>
 			</div>
 		</div>
@@ -15,12 +16,17 @@
 
 <script>
 import Login from "@/components/Login.vue";
+//import {useRoute, useRouter} from 'vue-router';
 
 export default {
 	name: "LogIn",
 	components: {
 		Login
 	},
+
+setup() {
+
+}
 };
 </script>
 
