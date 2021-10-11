@@ -36,7 +36,6 @@ app.use('/api', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 
-db.sequelize.sync();
 
 
 module.exports = app;

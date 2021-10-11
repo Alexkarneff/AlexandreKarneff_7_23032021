@@ -56,7 +56,6 @@ exports.login = (req, res, next) => {
                         }),
                         message: "Vous êtes connecté!"
                     });
-                    console.log(user);
                 })
                 
                 .catch((error) => res.status(500).json({ error }));

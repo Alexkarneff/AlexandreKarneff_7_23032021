@@ -33,6 +33,10 @@ ADD_NEW_POST(state, post) {
   state.posts = { post, ...state.posts };
 },
 
+DELETE_POST(state, posts) {
+  state.posts = posts;
+},
+
 CLEAR_STORE(state) {
   state.posts = [],
   state.user = {},
@@ -43,13 +47,13 @@ CLEAR_STORE(state) {
 };
 const actions = {
 
+  // Log In
   async fetchLogIn (context, data) {
 		const response = await userService.logIn(data);
 		context.commit('SET_USER_INFO', response.data.user);
 		context.commit('SET_TOKEN', response.data.token);
 		context.commit('LOG_USER');
 		return state.userLogged;
-
 	},
 
 // Create a post
@@ -57,9 +61,26 @@ const actions = {
     const response = await postService.createPost(postData, state.token);
       if (response.status == 201) {
         context.commit('ADD_NEW_POST', response.data.newPost);
-  return true;
+        return true;
 }
 },
+
+async fetchGetAllPosts (context) {
+  const response = await postService.getAllPosts(state.token);
+  if (response.status === 200) {
+    context.commit('SET_POSTS', response.data.posts);
+  }
+},
+
+async fetchDeletePost(context, id) {
+  const token = context.getters.getToken;
+  const response = await postService.deletePost(id, token);
+  if (response.status == 200) {
+    context.commit('DELETE_POST', response.data.posts);
+    return true;
+  }
+},
+
 
 }
 

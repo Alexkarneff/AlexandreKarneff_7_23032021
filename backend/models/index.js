@@ -1,7 +1,6 @@
 const dbConfig = require("../config/db.config.js");
 const Sequelize = require("sequelize");
 
-
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -24,6 +23,13 @@ db.user = require("./User")(sequelize, Sequelize);
 db.post = require("./Post")(sequelize, Sequelize);
 db.comment = require("./Comment")(sequelize, Sequelize);
 
-
+db.post.belongsTo(db.user, {
+	foreignKey: {
+		name: 'userId',
+		allowNull: false
+	},
+	onDelete: 'CASCADE',
+	onUpdate: 'NO ACTION',
+});
 
 module.exports = db;

@@ -1,5 +1,6 @@
-const db = require("../models/Post");
+const db = require("../models");
 const Post = db.Post;
+const User = db.User;
 
 exports.createPost = (req, res, next) => {
 	console.log(req.body);
@@ -15,7 +16,7 @@ exports.createPost = (req, res, next) => {
 		const post = {
 			userId : req.body.id,
 			title : req.body.title,
-			content : req.body.content,
+			text : req.body.content,
 			postDate : Date.now(),
 			likes: 0,
 			imageURL: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -28,20 +29,45 @@ exports.createPost = (req, res, next) => {
 		const post = {
 			userId : req.body.id,
 			title : req.body.title,
-			content : req.body.content,
+			text : req.body.content,
 			postDate : Date.now(),
 			likes: 0,
 			imageURL: null
 		};
-        Post.create(post)
-		.then(() => res.status(201).json({ message: 'Post créé !'}))
-		.catch( error => res.status(500).send({ error, message: 'Impossible de créer le post'} ));
-		
+		sendPostToDB(post).then(newPost => res.status(201).json({newPost}));	
 	};
 };
 
-exports.getAllPosts = (req, res, next) => {
+async function sendPostToDB(post) {
+	try {
+		let result = await Post.create(post);
+		let newpost = await getPost(result.dataValues.id);
+		return newpost;
+	} catch (error) {
+		console.log(error);
+	}
+}
 
+exports.getAllPosts = (req, res, next) => {
+	Post.findAll({
+		order: [['createdAt', 'DESC']],
+		attributes: {
+			exclude: ['updatedAt']
+		},
+		include: [
+			{
+				model: User,
+				attributes: ['firstName', 'lastName']
+			},
+		]
+	}).then((posts) => {
+		res.status(200).json(posts);
+	})
+	.catch((error) => {
+		res.status(400).json({
+			error: error,
+		});
+	});
 };
 
 exports.getPost = (req, res, next) => {

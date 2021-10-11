@@ -20,7 +20,7 @@ import { ref, onMounted, computed } from 'vue';
 
 export default {
     name: "LogIn",
-	emits: ["logInUser"],
+	emits: ["loginUser"],
 setup(props,context) {
 const email = ref("");
 const password = ref("");
@@ -31,7 +31,7 @@ const firstField = ref(null);
 			email: email.value,
 			password: password.value,
 		};
-	context.emit('logInUser', user);
+	context.emit('loginUser', user);
 		}		
 
 		onMounted( () => {

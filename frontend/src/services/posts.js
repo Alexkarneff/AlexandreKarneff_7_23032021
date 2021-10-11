@@ -17,7 +17,23 @@ function createPost(postFormData, token) {
 	);
 }
 
+function getAllPosts(token) {
+	return apiClient.get('/posts',
+		{ headers: {
+			"Authorization": "BEARER " + token
+		}}
+	);
+}
+
+function deletePost(id, token) {
+	return apiClient.delete('/posts/' + id,
+		{ headers: {
+			"Authorization": "BEARER " + token
+		}}
+	);
+}
+
 
 export default {
-    createPost
+    createPost, getAllPosts, deletePost
 }

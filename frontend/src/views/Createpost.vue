@@ -4,7 +4,7 @@
         <Navbar/>
     <h2>Créez votre post ici !</h2>
     <div class="formCreate">
-      <Createpost/>
+      <Createpost @createPost="createPost"/>
     </div>
     <div v-if="submitted" class="submissionSuccess">
 			<h4>You've submitted successfully!</h4>

@@ -9,17 +9,17 @@
 		<h2>Bienvenue sur le réseau social de Groupomania.</h2>
 		<h3>Partagez avec la communauté ! </h3>
 
-
 		<div class="userActionsContainer">
-
 			<button v-on:click="goToCreatePost" title="Write a post">Créer un post</button>
-
 		</div>
 
-		<!-- Affichage dynamique après création ou suppression d'un post -->
-		<div v-if="submitted" class="submissionSuccess">
-			<h4>Post envoyé avec succès !</h4>
+			<div class="postsContainer">
+			<div class="post" v-for="post in posts" :key="post.id">
+				<Posts :authorFname="post.User.firstName" :authorLname="post.User.lastName" :authorImage="post.User.imageURL" :imageURL="post.imageURL" :publicationDate="post.createdAt" :postText="post.publicationText" :postTitle="post.title" :nbLikes="post.likes" :authorId="post.userId" :postId="post.id" :comments="post.Comments" :usersLiked="post.usersLiked" @likeApost="likePost" @commentApost="commentPost" @deletePost="postToDelete" @deleteAcomment="deleteComment" @likeAcomment="likeComment">
+				</Posts>
+			</div>
 		</div>
+
 	</div>
 	</body>
 </template>
@@ -28,25 +28,36 @@
 
 // import Posts from "@/components/Posts.vue";
 import {useRoute, useRouter} from 'vue-router';
+import {useStore} from 'vuex';
+import { computed } from 'vue';
 import Navbar from "@/components/Navbar.vue";
+import Posts from "@/components/Posts.vue";
 
 export default {
 	name: "post",
 	components : {
-		Navbar
+		Navbar,
+		Posts
 	},
 	setup() {
 		
 		const route = useRoute();
 		const router = useRouter();
-		
+		const store = useStore();
+		const posts = computed(() => store.state.posts);
 
+		async function getPosts() {
+			await store.dispatch('fetchGetAllPosts');
+		}
+		getPosts();
+			
+			
 			const goToCreatePost = () => {
 			const redirectPost = route.query.redirect || '/createPost';
 			router.push(redirectPost);
 			};
 		
-		return { goToCreatePost };
+		return {goToCreatePost, posts };
 	}
 };
 </script>
@@ -105,20 +116,8 @@ h3 {
 	}
 }
 
-div.submissionSuccess, div.deletePostSuccess {
-	height: 40px;
-	background-color: #42b983;
-	border: 1px solid #d6e9c6;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 
-		h4 {
-			margin: 0;
-		}
-}
-
-.wallContainer {
+.postsContainer {
 	width: 60%;
 	margin: 10px auto 40px;
 	padding: 2% 0;
@@ -143,7 +142,7 @@ div.submissionSuccess, div.deletePostSuccess {
 			width: 75%;
 		}
 
-		.wallContainer {
+		.postsContainer {
 			width: 70%;
 		}
 	}
@@ -191,11 +190,8 @@ div.submissionSuccess, div.deletePostSuccess {
 			}
 		}
 
-		div.submissionSuccess, div.deletePostSuccess {
-			font-size: 14px;
-		}
 
-		.wallContainer {
+		.postsContainer {
 			width: 80%;
 		}
 	}

@@ -1,6 +1,5 @@
 <template>
 	<body>
-		<Navbar/>
 			<div class="signupForm">
 				<div class="signFormContainer">
 					<Signup/>
@@ -8,19 +7,18 @@
 							<router-link to="/login">Se connecter</router-link>
 						</p>
 				</div>
+				<router-link to="/home"> Retour à l'accueil </router-link>
 			</div>
 	</body>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
 import Signup from "@/components/Signup.vue";
 
 export default {
 	name: "SignUp",
 	components: {
-		Signup,
-		Navbar
+		Signup
 	}
 };
 </script>

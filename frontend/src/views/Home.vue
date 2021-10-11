@@ -1,24 +1,21 @@
 <template>
 <body>
-  <Navbar/>
   <div class="home"> 
     <img class="logo" alt="Vue logo" src="../assets/icon.svg">
     <Home msg="Welcome to Groupomania"/>
+    <router-link to="/login"> Me connecter </router-link> <br> <br>
+    <router-link to="/signup"> M'inscrire </router-link>
   </div>
 </body>
 </template>
 
 <script>
-// @ is an alias to /src
-import Navbar from '@/components/Navbar.vue'
 import Home from '@/components/Home.vue'
 
 export default {
   name: 'Helloworld',
   components: {
-    Home,
-    Navbar
-
+    Home
   }
 }
 </script>
