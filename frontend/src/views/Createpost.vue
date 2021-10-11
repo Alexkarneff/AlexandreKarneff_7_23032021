@@ -1,22 +1,56 @@
 <template>
 <!-- eslint-disable  -->
   <div class="home">
-
+        <Navbar/>
     <h2>Créez votre post ici !</h2>
     <div class="formCreate">
       <Createpost/>
     </div>
+    <div v-if="submitted" class="submissionSuccess">
+			<h4>You've submitted successfully!</h4>
+		</div>
+
   </div>
 </template>
 
 <script>
 import Createpost from "@/components/Createpost.vue";
+import Navbar from "@/components/Navbar.vue";
+import {ref} from 'vue';
+import {useStore} from 'vuex';
+import {useRoute, useRouter} from 'vue-router';
 
 export default {
 	name: "SignUp",
 	components: {
-		Createpost
-	}
+		Createpost,
+    Navbar
+	},
+  setup() {
+		const route = useRoute();
+		const router = useRouter();
+		const store = useStore();
+    const submitted = ref(false);
+    
+    async function createPost(postData) {
+			const postAdded = await store.dispatch('fetchCreatePost', postData);
+			if (postAdded) {
+				// afficher la div verte pendant 2.5s
+				submitted.value = true;
+				setTimeout(()=> {
+					submitted.value = false;
+				}, 2500);
+				goToPostPage();
+			}
+		}
+
+    const goToPostPage = () => {
+			const redirectPost = route.query.redirect || '/post';
+			router.push(redirectPost);
+		}
+
+    return { createPost, submitted }
+  } 
 };
 </script>
 

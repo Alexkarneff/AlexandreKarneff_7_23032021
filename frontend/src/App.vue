@@ -1,11 +1,7 @@
 <template>
-  <div id="nav">
-    <router-link to="/home">Home</router-link> |
-     <router-link to="/signup">S'inscrire</router-link> |
-    <router-link to="/login">Se connecter</router-link> 
-   
-  </div>
-  <router-view/>
+    <body>
+      <router-view/>
+    </body>
 </template>
 
 <style lang="scss">

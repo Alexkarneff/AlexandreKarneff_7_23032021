@@ -1,4 +1,6 @@
 <template>
+<body>
+	<Navbar/>
 	<div class="home">
 		<h1>
 			Hello {{ $store.state.user.firstName }}
@@ -19,16 +21,20 @@
 			<h4>Post envoyé avec succès !</h4>
 		</div>
 	</div>
+	</body>
 </template>
 
 <script>
 
 // import Posts from "@/components/Posts.vue";
 import {useRoute, useRouter} from 'vue-router';
-
+import Navbar from "@/components/Navbar.vue";
 
 export default {
 	name: "post",
+	components : {
+		Navbar
+	},
 	setup() {
 		
 		const route = useRoute();

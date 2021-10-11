@@ -9,23 +9,38 @@
 				</p>
 			</div>
 		</div>
-
-
 	</body>
 </template>
 
 <script>
 import Login from "@/components/Login.vue";
-//import {useRoute, useRouter} from 'vue-router';
+import { useStore } from 'vuex';
+import {useRoute, useRouter} from 'vue-router';
 
 export default {
 	name: "LogIn",
 	components: {
-		Login
+		Login,
 	},
 
 setup() {
-
+		const store = useStore();
+		const route = useRoute();
+		const router = useRouter();
+		
+		const goToPostPage = () => {
+			const redirectPost = route.query.redirect || '/post';
+			router.push(redirectPost);
+		}
+		async function logUser(data) {
+			const isLogged = await store.dispatch('fetchLogIn', data);
+			if (isLogged) {
+				goToPostPage();
+			}
+		}
+		
+		
+		return { logUser };
 }
 };
 </script>

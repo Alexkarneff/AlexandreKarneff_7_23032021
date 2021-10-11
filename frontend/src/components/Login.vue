@@ -17,25 +17,27 @@
 
 <script>
 import { ref, onMounted, computed } from 'vue';
-import {useRoute, useRouter} from 'vue-router';
-import axios from 'axios';
 
 export default {
     name: "LogIn",
-	setup() {
-		const email = ref("");
-		const password = ref("");
-		const firstField = ref(null);
-		const route = useRoute();
-		const router = useRouter();
-		
-		// Focus de la souris sur le 1er champ text au chargement de la page
+	emits: ["logInUser"],
+setup(props,context) {
+const email = ref("");
+const password = ref("");
+const firstField = ref(null);
+
+	function logInUser(){ 
+		const user = {
+			email: email.value,
+			password: password.value,
+		};
+	context.emit('logInUser', user);
+		}		
+
 		onMounted( () => {
 			firstField.value.focus();
 		})
 
-
-		//Validation des champs: calculer la valeur isFormValid pour enable le bouton 'login'
 		const isFormValid = computed(() => {
 			if (email.value !== "" && password.value !== "") {
 				return true;
@@ -43,36 +45,6 @@ export default {
 				return false;
 			}
 		})
-
-
-       const logInUser = () => { 
-
-        axios.post ('http://localhost:3000/api/auth/login', {
-				email : email.value,
-				password : password.value,
-			}) .then(function (data) {
-				resetForm();
-				goToPostList();
-                console.log(data);
-                })
-                .catch(function (error) {
-                    console.log(error) ;
-                    });	
-	}
-
-	
-			function resetForm() {
-			email.value = "",
-			password.value = "",
-			// Focus sur le 1er input après submit
-			firstField.value.focus()
-			}
-
-			const goToPostList = () => {
-			const redirectPost = route.query.redirect || '/post';
-			router.push(redirectPost);
-		}
-
 		return { email, firstField, password, isFormValid, logInUser };
 	}
 };

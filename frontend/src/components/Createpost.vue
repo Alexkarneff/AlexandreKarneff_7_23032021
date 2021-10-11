@@ -1,66 +1,83 @@
 <template>
 <!-- eslint-disable  -->
-
+	<body>
 	<form v-on:submit.prevent="createPost">
 		<label for="title"></label>
 		<input type="text" v-model="title" placeholder="Titre" id="title" ref="firstField"><br/>
 
 		<label for="content"></label>
-		<input type="text" v-model="content" id="content" placeholder="Votre post"><br/>
+		<input type="text" class="contentArea" v-model="content" id="content" placeholder="Votre post"><br/>
 
-        	<label for="image"></label>
-		<input type="img" v-model="image" id="image" placeholder="Votre image (si nécessaire)"><br/>
-		
-		
+    		<div class="container">
+      				<label for="file">Une image:
+        				<input type="file" id="file" ref="file"/>
+     				 </label>
+  			</div>
 		<button :disabled="!isFormValid">Poster !</button>
 	</form>
-	
+	</body>
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue';
-import axios from 'axios';
+import {ref, computed } from 'vue';
+import {useStore} from 'vuex';
 
 export default {
 	name: "createPost",
-	setup() {
+	emits: ['createPost'],
+	setup(props, {emit}) {
+		const store = useStore();
 		const title = ref("");
 		const content = ref("");
-        const image = ref("");
+		const file = ref("");
 		const firstField = ref(null);
 
-		onMounted( () => {
-			firstField.value.focus();
-		})
-		//Validation des champs: calculer la valeur isFormValid pour enable le bouton 'create account'
+		const postFormData = new FormData();
+		
+		const postData = {
+			title : '',
+			content: ''
+		};
+
+		function onFileSelected(event) {
+			file.value = event.target.files[0];
+			postFormData.set('imageURL', file.value, file.value.name);
+		}
+
+
+		function addPostDataToPost() {
+			postData.title = title.value;
+			postData.content = content.value;
+			postData.id = store.state.user.id;
+			return postData;
+		}
+
+		function createPost() {
+			const postData = addPostDataToPost();
+
+			for (let e in postData) {
+				postFormData.set(e, postData[e]);
+			}
+				emit('createPost', postFormData);
+				resetForm();
+		}
+			
 		const isFormValid = computed(() => {
 			if (title.value !== "") {
 				return true;
 			} else {
 				return false;
 			}
-		})
+		});
 
-    const createPost = () => { 
-        axios.post ('http://localhost:3000/api/posts', {
-				title : title.value,
-				content : content.value,
-			}) .then(function (data) {
-                console.log(data);
-					resetForm();
-                })
-                .catch(function (error) {
-                    console.log(error) ;
-                    });
-	}
-
-			function resetForm() {
-			title.value = "",
-			content.value = "",
+		function resetForm() {
+			title.value = "";
+			content.value = "";
+			file.value = "";
 			firstField.value.focus();
 		}
 
-    return {title, content, image, isFormValid, createPost };
+    return {title,content,file,firstField,onFileSelected,isFormValid,createPost };
     }
 };
 
@@ -90,9 +107,15 @@ form {
 			padding-left: 2%;
 			outline: none;
 		}
+		.contentArea {
+			width: 90%; 
+			height: 350px; 
+			border: 1px solid #999999; 
+			padding: 5px;
+		}
 		button {
 			width: 180px;
-			margin: 30px auto 0;
+			margin: 70px auto 0;
 			height: auto;
 			padding: 3.5% 2%;
 			background-color: #AB1F03;
@@ -107,6 +130,8 @@ form {
 			}
 		}
 	}
+
+
 
 
 	@media screen and (max-width: 1200px) {

@@ -1,23 +1,26 @@
 <template>
 	<body>
-		<div class="signupForm">
-			<div class="signFormContainer">
-				<Signup/>
-				<p class="toLogIn">Vous avez déja un compte ?
-					<router-link to="/login">Se connecter</router-link>
-				</p>
+		<Navbar/>
+			<div class="signupForm">
+				<div class="signFormContainer">
+					<Signup/>
+						<p class="toLogIn">Vous avez déja un compte ?
+							<router-link to="/login">Se connecter</router-link>
+						</p>
+				</div>
 			</div>
-		</div>
 	</body>
 </template>
 
 <script>
+import Navbar from '@/components/Navbar.vue'
 import Signup from "@/components/Signup.vue";
 
 export default {
 	name: "SignUp",
 	components: {
-		Signup
+		Signup,
+		Navbar
 	}
 };
 </script>

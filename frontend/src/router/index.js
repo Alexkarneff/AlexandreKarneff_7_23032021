@@ -4,6 +4,7 @@ import signUp from "../views/Signup.vue";
 import logIn from "../views/Login.vue";
 import posts from "../views/Posts.vue";
 import createPost from "../views/Createpost.vue";
+import logout from "../views/Logout.vue";
 
 const routes = [
   {
@@ -17,6 +18,12 @@ const routes = [
     component: signUp,
     meta: { auth: false },
   },
+  {
+		path: "/",
+		redirect: {
+		name: "Home"
+		}
+	},
   {
     path: "/login",
     name: "login",
@@ -34,8 +41,13 @@ const routes = [
     name: "createPost",
     component: createPost,
     meta: { auth: true },
+  },
+  {
+    path: "/logout",
+    name: "logout",
+    component: logout,
+    meta: { auth: true },
   }
-
 ];
 
 const router = createRouter({
