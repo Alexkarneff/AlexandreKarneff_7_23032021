@@ -40,9 +40,14 @@ setup() {
 				goToPostPage();
 			}
 		}
+
+		function saveUser(data) {
+			const user = JSON.stringify(data)
+			localStorage.setItem('user', user)
+		}
 		
 		
-		return { logUser };
+		return { logUser, saveUser };
 }
 };
 </script>

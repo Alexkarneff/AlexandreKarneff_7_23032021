@@ -3,8 +3,8 @@
 		<div class="navbarContainer">
 			<nav :class="{responsive: isBars}">
 				<div class="linkTo">
-					<router-link to="/home">
-						Home
+					<router-link to="/post">
+						Les Posts
 					</router-link>
 				</div>
                 <div class="linkTo">
@@ -52,6 +52,7 @@ export default {
 		}
 
         function logOutUser() {
+			
 			store.commit('CLEAR_STORE');
 			if (!store.state.userLogged) {
 				goToLogOutPage();

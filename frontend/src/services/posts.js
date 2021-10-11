@@ -9,10 +9,11 @@ const apiClient = axios.create({
 });
 
 function createPost(postFormData, token) {
+	
 	return apiClient.post('/posts', postFormData, 
 		{ headers: {
 			"Content-Type": "multipart/form-data",
-			"Authorization": "BEARER " + token
+			"Authorization": "Bearer " + token
 		}}
 	);
 }
@@ -20,7 +21,7 @@ function createPost(postFormData, token) {
 function getAllPosts(token) {
 	return apiClient.get('/posts',
 		{ headers: {
-			"Authorization": "BEARER " + token
+			"Authorization": "Bearer " + token
 		}}
 	);
 }
@@ -28,7 +29,7 @@ function getAllPosts(token) {
 function deletePost(id, token) {
 	return apiClient.delete('/posts/' + id,
 		{ headers: {
-			"Authorization": "BEARER " + token
+			"Authorization": "Bearer " + token
 		}}
 	);
 }
