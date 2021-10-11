@@ -15,7 +15,7 @@
 
 			<div class="postsContainer">
 			<div class="post" v-for="post in posts" :key="post.id">
-				<Posts :authorFname="post.User.firstName" :authorLname="post.User.lastName" :authorImage="post.User.imageURL" :imageURL="post.imageURL" :publicationDate="post.createdAt" :postText="post.publicationText" :postTitle="post.title" :nbLikes="post.likes" :authorId="post.userId" :postId="post.id" :comments="post.Comments" :usersLiked="post.usersLiked" @likeApost="likePost" @commentApost="commentPost" @deletePost="postToDelete" @deleteAcomment="deleteComment" @likeAcomment="likeComment">
+				<Posts :authorFirstName="post.User.firstName" :authorLastName="post.User.lastName" :imageURL="post.imageURL" :publicationDate="post.createdAt" :postText="post.publicationText" :postTitle="post.title" :authorId="post.userId" :postId="post.id" @deletePost="postToDelete">
 				</Posts>
 			</div>
 		</div>
@@ -50,9 +50,8 @@ export default {
 			await store.dispatch('fetchGetAllPosts');
 		}
 		getPosts();
-			
-			
-			const goToCreatePost = () => {
+
+		const goToCreatePost = () => {
 			const redirectPost = route.query.redirect || '/createPost';
 			router.push(redirectPost);
 			};

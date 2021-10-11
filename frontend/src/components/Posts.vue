@@ -2,15 +2,14 @@
 	<div class="postContainer">
 		<div class="postHeader">
 			<div class="leftSideHeader">
-
 				<div class="authorAndDate">
 					<p>{{ authorFirstName }} {{ authorLastName }}</p>
-
+                    <p>le {{ formattedPublicationDate }}</p>
 				</div>
 			</div>
 
 			<div class="rightSideHeader" v-show="authorEQuser || $store.state.user.admin">
-				<button class="button" @click="showAlert">Delete</button>
+				<button class="button" @click="deletePost"> Delete</button>
 			</div>
 		</div>
 
@@ -25,47 +24,48 @@
 </template>
 
 <script>
-//import moment from 'moment';
+import moment from 'moment';
 import { useStore } from 'vuex';
-import { ref, onUpdated } from 'vue';
+import { ref } from 'vue';
 
 
 export default {
-	components: {  },
 	name: 'Post',
 	props: {
 		'postId': Number,
 		'authorId': Number,
 		'authorFirstName': String,
 		'authorLastName': String,
-		'authorImage': String,
+        'publicationDate': Date,
 		'imageURL': String,
 		'postTitle': String,
 		'postText': String
 	},
-	setup(props) {
+    emits: ['deletePost'],
+
+	setup(props, context) {
 		// Données et variables
 		const store = useStore();
-		//const formattedPublicationDate = moment(props.publicationDate).format('DD/MM/YYYY');
+		const formattedPublicationDate = moment(props.publicationDate).format('DD/MM/YYYY');
 		let authorEQuser = ref(false);
 		const firstField = ref(null);
 		const postHasImage = ref(false);
-		const imgToDisplay = ref("");
 
 		if (props.imageURL != null) {
 			postHasImage.value = true;
 		}
-		// Focus de la souris sur le 1er champ texte
-		onUpdated( () => {
-			firstField.value.focus();
-		});
 
 		// Affichage du bouton Supprimer un post
 		if (props.authorId === store.state.user.id) {
 			authorEQuser.value = true;
 		}
 
-		return {authorEQuser, firstField, postHasImage, imgToDisplay };
+        function deletePost() {
+			const id = props.postId
+			context.emit('deletePost', id);
+		}
+
+		return {authorEQuser, firstField, postHasImage, formattedPublicationDate, deletePost };
 	}
 }
 </script>
