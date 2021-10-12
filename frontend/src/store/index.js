@@ -71,7 +71,7 @@ const actions = {
     async fetchGetAllPosts(context) {
         const response = await postService.getAllPosts(localStorage.getItem("token"));
         if (response.status === 200) {
-            context.commit('SET_POSTS', response.data.posts);
+            context.commit('SET_POSTS', response.data);
         }
     },
 

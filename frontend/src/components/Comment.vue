@@ -70,7 +70,7 @@ export default {
 		padding: 10px 15px;
 		min-height: 50px;
 		border-radius: 25px;
-		background-color: rgba(218, 204, 204, 0.6);
+		background-color: rgba(161, 154, 154, 0.6);
 		position: relative;
 
 		&__header {

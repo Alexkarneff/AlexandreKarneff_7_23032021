@@ -1,7 +1,7 @@
 const db = require("../models");
 const Post = db.post;
 const User = db.user;
-//const Comment = db.comment;
+const Comment = db.comment;
 const fs = require("fs");
 
 // création d'un post
@@ -65,15 +65,15 @@ exports.getAllPosts = (req, res, next) => {
                 model: User,
                 attributes: ['firstName', 'lastName']
             },
-            // GET des comments d'un post, non fonctionnel 
-            //{
-              //  model: Comment,
-               // attributes: ['content', 'userId' ,'id'],
-               // include: [{
-                //    model:User,
-                //    attributes:['firstName', 'lastName']
-               // }]
-           // }
+
+            {
+                model: Comment,
+                attributes: ['content', 'userId' ,'id'],
+                include: [{
+                    model:User,
+                    attributes:['firstName', 'lastName']
+                }]
+            }
             ]
         }).then((posts) => {
             res.status(200).json(posts);

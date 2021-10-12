@@ -66,7 +66,8 @@ exports.login = (req, res, next) => {
 
 // Suppression d'un compte
 exports.deleteAccount = (req, res, next) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
+    console.log (userId);
     User.destroy({
             where: { id: userId },
         })
