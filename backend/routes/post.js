@@ -8,10 +8,10 @@ const postController = require('../controllers/post');
 
 
 // Tous les posts
-router.get('/', postController.getAllPosts);
+router.get('/', auth, postController.getAllPosts);
 
 // Un seul post
-router.get('/:id', postController.getPost);
+router.get('/:id', auth, postController.getPost);
 
 // Créer un nouveau post
 router.post('/', auth, multer, postController.createPost);

@@ -14,7 +14,6 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express();
 
 db.sequelize.sync().then(result => {
-	// db.sequelize.sync({ force: true }).then(result => {
 	console.log(result);
 }).catch( error =>  { console.log(error )});
 

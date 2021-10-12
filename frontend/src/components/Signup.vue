@@ -58,7 +58,7 @@ export default {
 
 
 
-		//Validation des champs: calculer la valeur isFormValid pour enable le bouton 'create account'
+		//Validation des champs du form
 		const isFormValid = computed(() => {
 			if (email.value !== "" && firstName.value !== "" && lastName.value !== "" && password.value !== "" && account.value !== "") {
 				return true;
@@ -67,6 +67,7 @@ export default {
 			}
 		})
 
+	// Création d'utilisateur
     const createUser = () => { 
         axios.post ('http://localhost:3000/api/auth/signup', {
 				email : email.value,

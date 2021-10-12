@@ -26,6 +26,7 @@ const email = ref("");
 const password = ref("");
 const firstField = ref(null);
 
+	// Connexion de l'utilisateur
 	function logInUser(){ 
 		const user = {
 			email: email.value,

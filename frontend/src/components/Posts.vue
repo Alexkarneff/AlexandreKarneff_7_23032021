@@ -84,7 +84,7 @@ export default {
 			firstField.value.focus();
 		});
 
-		// Affichage du bouton Supprimer un post
+		// bouton Supprimer un post
 		if (props.authorId === store.state.user.id) {
 			authorIsUser.value = true;
 		}

@@ -25,10 +25,8 @@
 
 <script>
 
-// import Posts from "@/components/Posts.vue";
 import {useRoute, useRouter} from 'vue-router';
 import {useStore} from 'vuex';
-//import { computed } from 'vue';
 import Navbar from "@/components/Navbar.vue";
 import Posts from "@/components/Posts.vue";
 

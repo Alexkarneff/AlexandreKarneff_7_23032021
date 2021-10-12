@@ -40,7 +40,7 @@ export default {
 			const redirectLogOut = route.query.redirect || '/logout';
 			router.push(redirectLogOut);
 		}
-
+		// Déconnexion de l'utilisateur
         function logOutUser() {			
 			store.commit('CLEAR_STORE');
 			if (!store.state.userLogged) {

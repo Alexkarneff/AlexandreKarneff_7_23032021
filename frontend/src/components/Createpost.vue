@@ -38,20 +38,20 @@ export default {
 			title : '',
 			content: ''
 		};
-
+		// Si une image est ajoutée
 		function onFileSelected(event) {
 			file.value = event.target.files[0];
 			postFormData.set('imageURL', file.value, file.value.name);
 		}
 
-
+		// Ajouter les donées du formulaire au post
 		function addPostDataToPost() {
 			postData.title = title.value;
 			postData.content = content.value;
 			postData.id = store.state.user.id;
 			return postData;
 		}
-
+		// Création du post
 		function createPost() {
 			const postData = addPostDataToPost();
 

@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+// configuration de l'accès à la database du projet
 module.exports = {
     HOST: process.env.HOST,
     USER: process.env.USER,

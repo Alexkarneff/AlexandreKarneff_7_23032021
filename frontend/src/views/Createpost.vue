@@ -6,10 +6,6 @@
     <div class="formCreate">
       <Createpost @createPost="createPost"/>
     </div>
-    <div v-if="submitted" class="submissionSuccess">
-			<h4>You've submitted successfully!</h4>
-		</div>
-
   </div>
 </template>
 
@@ -35,11 +31,6 @@ export default {
     async function createPost(postData) {
 			const postAdded = await store.dispatch('fetchCreatePost', postData);
 			if (postAdded) {
-				// afficher la div verte pendant 2.5s
-				submitted.value = true;
-				setTimeout(()=> {
-					submitted.value = false;
-				}, 2500);
 				goToPostPage();
 			}
 		}
