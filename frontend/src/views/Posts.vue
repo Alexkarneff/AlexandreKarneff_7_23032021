@@ -10,16 +10,15 @@
 		<h3>Partagez avec la communauté ! </h3>
 
 		<div class="userActionsContainer">
-			<button v-on:click="goToCreatePost" title="Write a post">Créer un post</button>
+			<button v-on:click="goToCreatePost" title="Write a post">Créer un post </button>
 		</div>
 
-			<div class="postsContainer">
+	<div class="postsContainer">
 			<div class="post" v-for="post in posts" :key="post.id">
-				<Posts :authorFirstName="post.User.firstName" :authorLastName="post.User.lastName" :imageURL="post.imageURL" :publicationDate="post.createdAt" :postText="post.publicationText" :postTitle="post.title" :authorId="post.userId" :postId="post.id" @deletePost="postToDelete">
+				<Posts :postId="post.id" :authorId="post.userId" :authorFirstName="post.User.firstName" :authorLastName="post.User.lastName" :publicationDate="post.createdAt" :imageURL="post.imageURL" :postTitle="post.title" :postText="post.text">
 				</Posts>
 			</div>
 		</div>
-
 	</div>
 	</body>
 </template>
@@ -29,7 +28,7 @@
 // import Posts from "@/components/Posts.vue";
 import {useRoute, useRouter} from 'vue-router';
 import {useStore} from 'vuex';
-import { computed } from 'vue';
+//import { computed } from 'vue';
 import Navbar from "@/components/Navbar.vue";
 import Posts from "@/components/Posts.vue";
 
@@ -44,7 +43,7 @@ export default {
 		const route = useRoute();
 		const router = useRouter();
 		const store = useStore();
-		const posts = computed(() => store.state.posts);
+		const posts = store.state.posts;
 
 		async function getPosts() {
 			await store.dispatch('fetchGetAllPosts');
@@ -56,7 +55,7 @@ export default {
 			router.push(redirectPost);
 			};
 		
-		return {goToCreatePost, posts };
+		return {goToCreatePost, posts, console };
 	}
 };
 </script>
@@ -120,7 +119,6 @@ h3 {
 	width: 60%;
 	margin: 10px auto 40px;
 	padding: 2% 0;
-	// border: 1px solid black;
 
 	.post {
 		margin-bottom: 40px;

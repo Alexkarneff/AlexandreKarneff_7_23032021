@@ -32,14 +32,38 @@ import { ref } from 'vue';
 export default {
 	name: 'Post',
 	props: {
-		'postId': Number,
-		'authorId': Number,
-		'authorFirstName': String,
-		'authorLastName': String,
-        'publicationDate': Date,
-		'imageURL': String,
-		'postTitle': String,
-		'postText': String
+		postId: {
+            type: Number,
+            required: true
+            },
+        authorId: {
+            type: Number,
+            required: true
+        },
+        authorFirstName: {
+            type: String,
+            required: true
+        },
+        authorLastName: {
+            type: String,
+            required: true
+        },
+        publicationDate: {
+            type: Date,
+            required: true
+        },
+        imageURL: {
+            type: String,
+            required: false
+        },
+        postTitle: {
+            type: String,
+            required:true
+        },
+        postText: {
+            type: String,
+            required:false
+        }
 	},
     emits: ['deletePost'],
 
@@ -149,7 +173,6 @@ export default {
 			display: flex;
 			flex-wrap: wrap;
 			overflow: auto;
-			// border: 1px black solid;
 		}
 
 		&__image {

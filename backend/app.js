@@ -6,8 +6,9 @@ const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 const commentRoutes = require('./routes/comment');
 
-
-
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+  }
 
 // Création App
 const app = express();
