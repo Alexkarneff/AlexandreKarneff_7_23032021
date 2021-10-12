@@ -7,11 +7,6 @@ module.exports = (sequelize, Sequelize) => {
 		text: {
 			type: Sequelize.TEXT,
 		},
-		likes: {
-			type: Sequelize.INTEGER,
-			unsigned: true,
-			default: 0
-		},
 		imageURL: {
 			type: Sequelize.STRING
 		}

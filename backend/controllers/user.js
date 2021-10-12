@@ -3,6 +3,7 @@ const User = db.user;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+// Inscription
 exports.signup = (req, res, next) => {
     console.log(req.body);
     bcrypt
@@ -26,6 +27,7 @@ exports.signup = (req, res, next) => {
         });
 };
 
+// Connexion et assignation d'un token d'autorisation 
 exports.login = (req, res, next) => {
     
     User.findOne({ where: { email: req.body.email } })
@@ -62,9 +64,9 @@ exports.login = (req, res, next) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
+// Suppression d'un compte
 exports.deleteAccount = (req, res, next) => {
     const userId = req.params.id;
-
     User.destroy({
             where: { id: userId },
         })

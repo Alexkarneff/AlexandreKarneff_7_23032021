@@ -3,13 +3,13 @@
 		<div class="postHeader">
 			<div class="leftSideHeader">
 				<div class="authorAndDate">
-					<p>{{ authorFirstName }} {{ authorLastName }}</p>
-                    <p>le {{ formattedPublicationDate }}</p>
+					<p>{{ authorFname }} {{ authorLname }}</p>
+					<p>le {{ formattedPublicationDate }}</p>
 				</div>
 			</div>
 
-			<div class="rightSideHeader" v-show="authorEQuser || $store.state.user.admin">
-				<button class="button" @click="deletePost"> Delete</button>
+			<div class="rightSideHeader" v-show="authorIsUser || $store.state.user.admin">
+				<button class="button" @click="deleteAPost">Delete</button>
 			</div>
 		</div>
 
@@ -20,76 +20,108 @@
 				<img alt="posted image" :src=imageURL>
 			</div>
 		</div>
+
+		<div class="postNumbers">
+			<p>{{ comments.length }} commentaires</p>
+		</div>
+
+		<div class=postActionsContainer>
+			<div class="commentContainer">
+				<a @click.prevent="triggerWritingComment" title="Commenter">
+					<p>Add a comment</p>
+				</a>
+			</div>
+		</div>
+
+		<div v-show="writingComment" class="commentInputContainer">
+			<input ref="firstField" type="text" placeholder="Écrire un commentaire " v-model="commentText" >
+		</div>
+
+		<div v-show="comments.length > 0" v-for="comment in comments" :key="comment.id">
+			<Comment :authorFirstName="comment.User.firstName" :imageURL="comment.User.imageURL" :authorLastName="comment.User.lastName" :authorId="comment.userId" :commentId="comment.id" :commentText="comment.content" @deleteAComment="deleteAComment">
+			</Comment>
+		</div>
+
 	</div>
 </template>
 
 <script>
 import moment from 'moment';
+import Comment from '../components/Comment.vue';
 import { useStore } from 'vuex';
-import { ref } from 'vue';
-
+import { ref, onUpdated } from 'vue';
 
 export default {
+	components: { Comment },
 	name: 'Post',
 	props: {
-		postId: {
-            type: Number,
-            required: true
-            },
-        authorId: {
-            type: Number,
-            required: true
-        },
-        authorFirstName: {
-            type: String,
-            required: true
-        },
-        authorLastName: {
-            type: String,
-            required: true
-        },
-        publicationDate: {
-            type: Date,
-            required: true
-        },
-        imageURL: {
-            type: String,
-            required: false
-        },
-        postTitle: {
-            type: String,
-            required:true
-        },
-        postText: {
-            type: String,
-            required:false
-        }
+		'postId': Number,
+		'authorId': Number,
+		'authorFirstName': String,
+		'authorLastName': String,
+		'imageURL': String,
+		'publicationDate': String,
+		'postTitle': String,
+		'postText': String,
+		'comments': Array,
 	},
-    emits: ['deletePost'],
-
+	emits: ['deleteAPost', 'commentApost', 'deleteAcomment'],
 	setup(props, context) {
 		// Données et variables
 		const store = useStore();
 		const formattedPublicationDate = moment(props.publicationDate).format('DD/MM/YYYY');
-		let authorEQuser = ref(false);
+		let authorIsUser = ref(false);
+		let writingComment = ref(false);
+		let commentText = ref("");
 		const firstField = ref(null);
 		const postHasImage = ref(false);
 
 		if (props.imageURL != null) {
 			postHasImage.value = true;
 		}
+		// Focus de la souris sur le 1er champ texte
+		onUpdated( () => {
+			firstField.value.focus();
+		});
 
 		// Affichage du bouton Supprimer un post
 		if (props.authorId === store.state.user.id) {
-			authorEQuser.value = true;
+			authorIsUser.value = true;
 		}
 
-        function deletePost() {
+		// Suppression d'un post
+		function deleteAPost() {
 			const id = props.postId
-			context.emit('deletePost', id);
+			context.emit('deleteAPost', id);
 		}
 
-		return {authorEQuser, firstField, postHasImage, formattedPublicationDate, deletePost };
+		// Afficher sous le post l'input pour écrire un commentaire
+		function triggerWritingComment() {
+			if (writingComment.value === false ) {
+				writingComment.value = true;
+			} else {
+				writingComment.value = false;
+			}
+		}
+
+		// Écrire un commentaire
+		function commentAPost() {
+			const postId = props.postId;
+			const commentData = {
+				postId: postId,
+				content: commentText.value,
+				userId : store.state.user.id
+			}
+			context.emit('commentApost', commentData);
+			writingComment.value = false;
+		}
+
+		// Supprimer un commentaire
+		function deleteAComment(id) {
+			context.emit('deleteAcomment', id);
+		}
+		return { formattedPublicationDate, authorIsUser, triggerWritingComment, writingComment, commentAPost, commentText, deleteAComment, deleteAPost, firstField, postHasImage};
+
 	}
 }
 </script>
@@ -113,24 +145,6 @@ export default {
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
-
-			.userPicContainer {
-				width: 50px;
-				height: 50px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				margin: 0 15px 0 0;
-				border-radius: 50%;
-
-				img {
-					border-radius: 50%;
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-					border: 1px black solid;
-				}
-			}
 	
 			.authorAndDate {
 				p {
@@ -173,6 +187,7 @@ export default {
 			display: flex;
 			flex-wrap: wrap;
 			overflow: auto;
+			// border: 1px black solid;
 		}
 
 		&__image {
@@ -204,7 +219,7 @@ export default {
 		align-items: center;
 		justify-content: space-around;
 
-		.likeContainer a, .commentContainer a {
+		.commentContainer a {
 			display: flex;
 			align-items: center;
 			margin: 0 20px;
@@ -266,13 +281,6 @@ export default {
 				box-shadow: 1px 1px 5px black;
 				// border: black 1px solid;
 			}
-		}
-
-		.iconSendComment {
-			width: 35px;
-			height: 25px;
-			cursor: pointer;
-			color: #AB1F03;
 		}
 	}
 

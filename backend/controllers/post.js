@@ -1,7 +1,10 @@
 const db = require("../models");
 const Post = db.post;
 const User = db.user;
+//const Comment = db.comment;
+const fs = require("fs");
 
+// création d'un post
 exports.createPost = (req, res, next) => {
     console.log(req.body);
     // Valid request
@@ -12,6 +15,7 @@ exports.createPost = (req, res, next) => {
         return
     }
 
+    // Le post a t'il une image
     if (req.file) {
         const post = {
             userId: req.body.id,
@@ -37,7 +41,7 @@ exports.createPost = (req, res, next) => {
         sendPostToDB(post).then(newPost => res.status(201).json({ newPost }));
     };
 };
-
+// fonction async pour l'envoi en DB
 async function sendPostToDB(post) {
     try {
         let result = await Post.create(post);
@@ -47,8 +51,9 @@ async function sendPostToDB(post) {
         console.log(error);
     }
 }
-
+// récupérer un array de tous les posts
 exports.getAllPosts = (req, res, next) => {
+
     Post.findAll({
             order: [
                 ['createdAt', 'DESC']
@@ -59,20 +64,33 @@ exports.getAllPosts = (req, res, next) => {
             include: [{
                 model: User,
                 attributes: ['firstName', 'lastName']
-            }, ]
+            },
+            // GET des comments d'un post, non fonctionnel 
+            //{
+              //  model: Comment,
+               // attributes: ['content', 'userId' ,'id'],
+               // include: [{
+                //    model:User,
+                //    attributes:['firstName', 'lastName']
+               // }]
+           // }
+            ]
         }).then((posts) => {
             res.status(200).json(posts);
         })
         .catch((error) => {
             res.status(400).json({
-                error: error,
+                error: error, message:'Erreur Get'
             });
         });
 };
 
+// Récupérer un post en particulier
 exports.getPost = (req, res, next) => {
 
 };
+
+// Supprimer un post
 
 exports.deletePost = (req, res, next) => {
     const postId = req.params.id;
@@ -80,8 +98,4 @@ exports.deletePost = (req, res, next) => {
     Post.destroy({
         where: { postId: id }
     })
-};
-
-exports.likePost = (req, res, next) => {
-
 };

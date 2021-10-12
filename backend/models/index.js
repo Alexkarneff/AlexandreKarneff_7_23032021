@@ -32,4 +32,14 @@ db.post.belongsTo(db.user, {
 	onUpdate: 'NO ACTION',
 });
 
+db.comment.belongsTo(db.user, {
+	foreignKey: {
+		name: 'userId',
+		allowNull: false
+	},
+	onDelete: 'CASCADE', 
+	onUpdate: 'NO ACTION',
+});
+
+
 module.exports = db;

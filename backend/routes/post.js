@@ -19,7 +19,4 @@ router.post('/', auth, multer, postController.createPost);
 // Supprimer un post
 router.delete('/:id', auth, postController.deletePost);
 
-// Liker un post
-router.put('/like', postController.likePost);
-
 module.exports = router;
