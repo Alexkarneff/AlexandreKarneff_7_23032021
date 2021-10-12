@@ -7,27 +7,26 @@
 
 		<p id="subscribed">Subscribed on {{ formattedDate }} </p>
 
-		<form enctype="multipart/form-data">
+		<div class="infoContainer">
 			<div class="labelInputContainer">
 				<label for="firstName">First Name</label>
-				<input id='firstName' type="text" ref="firstField" :value="currentUser.firstName" alt="Your first name" title="Your first name">
+				<p> {{ currentUser.firstName }} </p>
 			</div>
 			
 			<div class="labelInputContainer">
 				<label for="lastName">Last Name</label>
-				<input id='lastName' type="text" :value="currentUser.lastName" alt="Your last name" title="Your last name">
+				<p> {{ currentUser.lastName }} </p>
 			</div>
 
 			<div class="labelInputContainer">
 				<label for="email">Email</label>
-				<input id='email' type="email" :value="currentUser.email" @change="updateEmail" alt="Your email" title="Your email">
+				<p> {{ currentUser.email }} </p>
 			</div>
 		
-
 			<div class="EndFormButtonsContainer">
 				<button id="delete" @click.prevent="deleteAccount" alt="Delete account" title="Delete account">Delete account</button>
 			</div>
-		</form>
+		</div>
 
 	</div>
      </body>
@@ -46,26 +45,19 @@ export default {
 	name: "Account",
 	setup() {
 		// Données et variables
+
 		const store = useStore();
 		const route = useRoute();
 		const router = useRouter();
 		let userId = computed(() => store.state.user.id);
 		const subscribed = computed(() => store.state.subscribed);
 		console.log("subscribed: ", subscribed.value);
-		let admin = computed( () => store.state.user.admin);
 		let account = ref("");
 		const formattedDate = moment(subscribed).format('DD/MM/YYYY');
 		let currentUser = computed(() => store.state.user);
 
 		const firstField = ref(null);
 
-
-		//Display account type
-		if (admin.value) {
-			account.value = 'Admin';
-		} else {
-			account.value = 'Default';
-        }
 
 		// Suppression de compte et redirection vers la page signup
 		const redirectToSignUp = route.query.redirect || '/signup';
@@ -77,8 +69,6 @@ export default {
 				router.push(redirectToSignUp);
 			}
 		}
-
-
 		return { userId, currentUser, formattedDate, deleteAccount, firstField, confirm, account };
 	}
 };
@@ -103,10 +93,9 @@ export default {
 		}
 	}
 
-	form {
+	.infoContainer {
 		width: 100%;
 		margin: 40px 0 0 0;
-		background-color: rgb(247, 217, 203);
 		padding-top: 40px;
 	
 
@@ -128,20 +117,13 @@ export default {
 				background-color: white;
 				box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
 			}
-			textarea {
-				outline: none;
-				border: none;
-				padding-left: 1%;
-				box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
-			}
+			
 		}
 
 		.EndFormButtonsContainer {
-			width: 50%;
+			width: 100%;
 			height: 210px;
-			margin: 25px auto 0;
 			display: flex;
-			justify-content: space-between;
 			align-items: center;
 		}
 		
@@ -149,8 +131,7 @@ export default {
 			height: 50px;
 			width: 150px;
 			border-radius: 4px;
-			padding: 8px 10px;
-			margin: 0 25px;
+			margin: auto;
 			background-color: #AB1F03;
 			color: white;
 			border: none;
@@ -195,7 +176,7 @@ export default {
 				font-size: 14px;
 			}
 
-			form {
+			.infoContainer {
 				margin-top: 20px;
 				font-size: 14px;
 

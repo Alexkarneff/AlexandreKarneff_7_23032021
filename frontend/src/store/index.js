@@ -69,15 +69,14 @@ const actions = {
     },
 
     async fetchGetAllPosts(context) {
-        const response = await postService.getAllPosts(state.token);
+        const response = await postService.getAllPosts(localStorage.getItem("token"));
         if (response.status === 200) {
             context.commit('SET_POSTS', response.data.posts);
         }
     },
 
     async fetchDeletePost(context, id) {
-        const token = context.getters.getToken;
-        const response = await postService.deletePost(id, token);
+        const response = await postService.deletePost(id, localStorage.getItem("token"));
         if (response.status == 200) {
             context.commit('DELETE_POST', response.data.posts);
             return true;
@@ -85,7 +84,7 @@ const actions = {
     },
 
 	async fetchDeleteAccount (context, id) {
-		const response = await userService.deleteAccount(id, state.token);
+		const response = await userService.deleteAccount(id, localStorage.getItem("token"));
 		if (response.status === 200) {
 			context.commit('CLEAR_STORE');
 			return true;

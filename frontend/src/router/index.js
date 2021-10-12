@@ -44,7 +44,7 @@ const routes = [
     meta: { auth: true },
   },
   {
-		path: "/myaccount/:id",
+		path: "/myaccount",
 		name: "myAccount",
 		component: myAccount,
 		meta: { auth: true}
