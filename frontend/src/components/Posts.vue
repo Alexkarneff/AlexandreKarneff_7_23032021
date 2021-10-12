@@ -9,7 +9,7 @@
 			</div>
 
 			<div class="rightSideHeader" v-show="authorIsUser || $store.state.user.admin">
-				<button class="button" @click="deleteAPost">Delete</button>
+				<button class="button" @click="deleteAPost">Supprimer</button>
 			</div>
 		</div>
 
@@ -28,7 +28,7 @@
 		<div class=postActionsContainer>
 			<div class="commentContainer">
 				<a @click.prevent="triggerWritingComment" title="Commenter">
-					<p>Add a comment</p>
+					<p>Commenter</p>
 				</a>
 			</div>
 		</div>

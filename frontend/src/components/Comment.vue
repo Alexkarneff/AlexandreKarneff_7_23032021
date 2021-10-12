@@ -5,7 +5,7 @@
 			<div class="commentContent__header">
 				<p>{{ authorFirstName }} {{ authorLastName }}</p>
 				<div class="rightSideHeader" v-show="authorIsUser || $store.state.user.admin">
-					<fas icon="trash" @click="deleteAComment" title="Delete"></fas>
+				<button class="button" @click="deleteAComment">Supprimer</button>
 				</div>
 			</div>
 			<p class="commentContent__text">{{ commentText }}</p>
@@ -91,14 +91,18 @@ export default {
 				justify-content: center;
 				align-items: center;
 
-				.fa-trash {
-					width: 20px;
-					position: absolute;
-				}
+                button {
+				border-radius: 3px;
+				color: white;
+				height: 35px;
+				z-index: 1;
+				cursor: pointer;
+				border: none;
+				font-weight: bold;
+				background-color: rgba(0, 0, 0, 0.5);
+				box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+			}
 
-				:hover {
-					cursor: pointer;
-				}
 			}
 		}
 

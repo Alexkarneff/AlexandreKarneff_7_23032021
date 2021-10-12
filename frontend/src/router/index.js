@@ -5,6 +5,7 @@ import logIn from "../views/Login.vue";
 import posts from "../views/Posts.vue";
 import createPost from "../views/Createpost.vue";
 import logout from "../views/Logout.vue";
+import myAccount from "../views/Myaccount.vue";
 
 const routes = [
   {
@@ -43,11 +44,18 @@ const routes = [
     meta: { auth: true },
   },
   {
+		path: "/myaccount/:id",
+		name: "myAccount",
+		component: myAccount,
+		meta: { auth: true}
+	},
+  {
     path: "/logout",
     name: "logout",
     component: logout,
     meta: { auth: true },
   }
+
 ];
 
 const router = createRouter({

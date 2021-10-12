@@ -2,7 +2,6 @@ const db = require("../models");
 const Comment = db.Comment;
 
 
-
 // Ajout de commentaire
 exports.addComment = (req, res, next) => {
 	let created=false;

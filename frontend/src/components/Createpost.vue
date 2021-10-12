@@ -9,8 +9,8 @@
 		<input type="text" class="contentArea" v-model="content" id="content" placeholder="Votre post"><br/>
 
     		<div class="container">
-      				<label for="file">Une image:
-        				<input type="file" id="file" ref="file"/>
+      				<label for="file">Une image pour votre post :
+        				<input type="file" id="file" ref="file" name="postImage" accept="image/*" @change="onFileSelected"/>
      				 </label>
   			</div>
 		<button :disabled="!isFormValid">Poster !</button>

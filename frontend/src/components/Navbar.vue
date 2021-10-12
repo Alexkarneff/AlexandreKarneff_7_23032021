@@ -1,14 +1,20 @@
 <template>
 	<header>
 		<div class="navbarContainer">
-			<nav :class="{responsive: isBars}">
+			<nav>
 				<div class="linkTo">
 					<router-link to="/post">
 						Les Posts
 					</router-link>
 				</div>
+				<div class="linkTo">
+						<router-link to="/myAccount">
+						Mon Compte
+					</router-link>
+				</div>
+
                 <div class="linkTo">
-                    <router-link to="/logout">
+                    <router-link to="/logout" @click="logOutUser">
                     Déconnexion
                     </router-link>
                 </div>       					
@@ -18,7 +24,6 @@
 </template>
 
 <script>
-import {ref} from 'vue';
 import {useStore} from 'vuex';
 import {useRoute, useRouter} from 'vue-router';
 
@@ -26,41 +31,23 @@ import {useRoute, useRouter} from 'vue-router';
 
 export default {
 	name: "navBar",
-    data() {
-        return {
-            loggedIn:false
-        };
-    },
 	setup() {
 		const route = useRoute();
 		const router = useRouter();
 		const store = useStore();
-		const isBars = ref(false);
-
-		function addResponsiveClass() {
-			if (isBars.value == false) {
-				isBars.value = true;
-			} else {
-				isBars.value = false;
-			}
-		}
-		
 
         const goToLogOutPage = () => {
 			const redirectLogOut = route.query.redirect || '/logout';
 			router.push(redirectLogOut);
 		}
 
-        function logOutUser() {
-			
+        function logOutUser() {			
 			store.commit('CLEAR_STORE');
 			if (!store.state.userLogged) {
 				goToLogOutPage();
 			}
 		}
-
-		return {addResponsiveClass, isBars, logOutUser};
-
+		return {logOutUser};
 	}
 }
 </script>
@@ -143,47 +130,6 @@ nav {
 		text-align: center;
 		clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 		transition: all 0.4s ease-in-out;
-		
-		.linkTo {
-			display: none;
-		}
-
-		.iconNav {
-			width: 50px;
-			z-index: 1;
-			display: block;
-			right: 0.5rem;
-			cursor: pointer;
-			color: #373737;
-			font-size: 2rem!important;
-		}
 	}
-
-	nav.responsive {
-		// height: 400px;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		position: absolute;
-		top: 0;
-		// bottom: 0;
-
-		.linkTo {
-			width: 100%;
-			height: 50px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			text-align: center;
-			background: #F0EAd6;
-			margin: 0;
-			position: relative;
-			top: 5rem;
-			// font-size: 3rem;
-		}
-
-	}
-
 }
 </style>

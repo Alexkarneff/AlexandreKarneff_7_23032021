@@ -84,6 +84,13 @@ const actions = {
         }
     },
 
+	async fetchDeleteAccount (context, id) {
+		const response = await userService.deleteAccount(id, state.token);
+		if (response.status === 200) {
+			context.commit('CLEAR_STORE');
+			return true;
+		}
+	},
 
 }
 

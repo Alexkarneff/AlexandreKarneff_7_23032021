@@ -23,6 +23,7 @@ db.user = require("./User")(sequelize, Sequelize);
 db.post = require("./Post")(sequelize, Sequelize);
 db.comment = require("./Comment")(sequelize, Sequelize);
 
+// post et user
 db.post.belongsTo(db.user, {
 	foreignKey: {
 		name: 'userId',
@@ -32,6 +33,7 @@ db.post.belongsTo(db.user, {
 	onUpdate: 'NO ACTION',
 });
 
+// comment et user
 db.comment.belongsTo(db.user, {
 	foreignKey: {
 		name: 'userId',
@@ -41,5 +43,15 @@ db.comment.belongsTo(db.user, {
 	onUpdate: 'NO ACTION',
 });
 
+// post et comment 
+db.post.hasMany(db.comment);
+db.comment.belongsTo(db.post, {
+	foreignKey: {
+		name: 'postId',
+		allowNull: false
+	},
+	onDelete: 'CASCADE',
+	onUpdate: 'NO ACTION',
+});
 
 module.exports = db;

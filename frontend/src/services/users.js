@@ -34,6 +34,14 @@ function logIn(data) {
 	return apiClient.post('/auth/login', data);
 }
 
+function deleteAccount(id, token) {
+	return apiClient.delete('users/myaccount/' + id,
+		{ headers: {
+			"Authorization": "BEARER " + token
+		}}
+	);
+}
+
 export default {
-	create, logIn
+	create, logIn, deleteAccount
 }
