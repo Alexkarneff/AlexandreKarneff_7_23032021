@@ -6,6 +6,8 @@ import posts from "../views/Posts.vue";
 import createPost from "../views/Createpost.vue";
 import logout from "../views/Logout.vue";
 import myAccount from "../views/Myaccount.vue";
+import store from "../store";
+
 
 const routes = [
   {
@@ -17,7 +19,7 @@ const routes = [
     path: "/signup",
     name: "signup",
     component: signUp,
-    meta: { auth: false },
+    meta: { guest: true },
   },
   {
 		path: "/",
@@ -29,7 +31,7 @@ const routes = [
     path: "/login",
     name: "login",
     component: logIn,
-    meta: { auth: false },
+    meta: { guest: false },
   },
   {
 		path: "/post",
@@ -61,6 +63,30 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.auth)) {
+      if (store.getters.isUserLogged) {
+          next();
+          return;
+      }
+      next("/login");
+  } else {
+      next();
+  }
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.guest)) {
+      if (store.getters.isUserLogged) {
+          next("/post");
+          return;
+      }
+      next();
+  } else {
+      next();
+  }
 });
 
 export default router;

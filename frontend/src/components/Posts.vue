@@ -22,7 +22,7 @@
     </div>
 
     <div class="postNumbers">
-      <p>{{ comments.length }} commentaires</p>
+      <p>{{ comments.length }} Commentaires</p>
     </div>
 
     <div class="postActionsContainer">

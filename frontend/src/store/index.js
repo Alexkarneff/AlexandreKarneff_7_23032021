@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
 import userService from '@/services/users.js';
 import postService from '@/services/posts.js'
+import createPersistedState from "vuex-persistedstate";
+import router from '../router';
 
 let state = {
     userLogged: false,
@@ -56,6 +58,7 @@ const actions = {
         localStorage.setItem("token", response.data.token);
         context.commit('SET_TOKEN', response.data.token);
         context.commit('LOG_USER');
+        router.push("/post");
         return state.userLogged;
     },
 
@@ -101,6 +104,10 @@ const getters = {
 
     getUserId: (state) => {
         return state.user.id;
+    },
+    isUserLogged: (state) => {
+        console.log(state.userLogged);
+        return state.userLogged;
     }
 }
 
@@ -109,7 +116,7 @@ const store = createStore({
     mutations,
     actions,
     getters,
-
+    plugins: [createPersistedState()]
 });
 
 export default store;
