@@ -15,7 +15,7 @@
 
 	<div class="postsContainer">
 			<div class="post" v-for="post in posts" :key="post.id">
-				<Posts :postId="post.id" :authorId="post.userId" :authorFirstName="post.User.firstName" :authorLastName="post.User.lastName" :publicationDate="post.createdAt" :imageURL="post.imageURL" :postTitle="post.title" :postText="post.text">
+				<Posts :postId="post.id" :authorId="post.userId" :authorFirstName="post.User.firstName" :authorLastName="post.User.lastName" :publicationDate="post.createdAt" :imageURL="post.imageURL" :postTitle="post.title" :postText="post.text" @commentApost="commentPost" @deletePost="postToDelete" @deleteAcomment="deleteComment">
 				</Posts>
 			</div>
 		</div>
@@ -27,6 +27,7 @@
 
 import {useRoute, useRouter} from 'vue-router';
 import {useStore} from 'vuex';
+import { ref } from 'vue';
 import Navbar from "@/components/Navbar.vue";
 import Posts from "@/components/Posts.vue";
 
@@ -41,6 +42,7 @@ export default {
 		const route = useRoute();
 		const router = useRouter();
 		const store = useStore();
+		const postDeleted = ref(false);
 		const posts = store.state.posts;
 
 		async function getPosts() {
@@ -52,8 +54,19 @@ export default {
 			const redirectPost = route.query.redirect || '/createPost';
 			router.push(redirectPost);
 			};
+
+		//Suppression d'un post
+		async function postToDelete(id) {
+			const deletion = await store.dispatch('fetchDeletePost', id);		
+			if (deletion) {
+				postDeleted.value = true;
+				setTimeout(()=> {
+					postDeleted.value = false;
+				}, 2500);
+			}
+		}
 		
-		return {goToCreatePost, posts, console };
+		return {goToCreatePost, posts, console, postToDelete };
 	}
 };
 </script>

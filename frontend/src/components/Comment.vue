@@ -36,7 +36,7 @@ export default {
 		const store = useStore();
 		let authorIsUser = ref(false);
 
-		// Affichage du bouton Supprimer un commentaire
+		// Bouton Supprimer un commentaire
 		if (props.authorId === store.state.user.id) {
 			authorIsUser.value = true;
 		}

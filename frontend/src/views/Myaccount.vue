@@ -64,7 +64,6 @@ export default {
 		async function deleteAccount() {
 			const id = route.params.id;
 			const accountDeleted = await store.dispatch('fetchDeleteAccount', id);
-
 			if (accountDeleted) {
 				router.push(redirectToSignUp);
 			}
