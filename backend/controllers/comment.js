@@ -1,5 +1,5 @@
 const db = require("../models");
-const Comment = db.Comment;
+const Comment = db.comment;
 
 
 // Ajout de commentaire
@@ -21,14 +21,8 @@ exports.addComment = (req, res, next) => {
 
 // Suppression de commentaire
 exports.deleteComment = (req, res, next) => {
-	commentId = req.params.id;
-
-	Comment.destroy({
-		where: { id: commentId }
-	})
-	.then(() => {
-					})
-	.catch(error => {
-		res.status(500).send({error, message: "Un problème est survenu lors de la suppression du commentaire" })
-	});
+    const commentId = req.params.id;
+        Comment.destroy({where: { id: commentId }})
+		.then(() => res.status(200).json({ message: "Comment supprimé !" }))
+        .catch((error) => res.status(400).json({ error }));
 };

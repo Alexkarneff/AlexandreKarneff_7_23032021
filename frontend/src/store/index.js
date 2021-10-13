@@ -1,6 +1,7 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
 import userService from '@/services/users.js';
-import postService from '@/services/posts.js'
+import postService from '@/services/posts.js';
+import commentService from '@/services/comments.js';
 import createPersistedState from "vuex-persistedstate";
 import router from '../router';
 
@@ -54,7 +55,6 @@ const actions = {
     async fetchLogIn(context, data) {
         const response = await userService.logIn(data);
         context.commit('SET_USER_INFO', response.data.user);
-        localStorage.setItem("user" ,response.data);
         localStorage.setItem("token", response.data.token);
         context.commit('SET_TOKEN', response.data.token);
         context.commit('LOG_USER');
@@ -79,7 +79,8 @@ const actions = {
     },
 
     async fetchDeletePost(context, id) {
-        const response = await postService.deletePost(id, localStorage.getItem("token"));
+        const token = context.getters.getToken;
+        const response = await postService.deletePost(id, token);
         if (response.status == 200) {
             context.commit('DELETE_POST', response.data.posts);
             return true;
@@ -93,6 +94,21 @@ const actions = {
 			return true;
 		}
 	},
+
+    async fetchCreateComment(context, commentData) {
+		const created = await commentService.createComment(commentData, localStorage.getItem("token"));
+		return created;
+	},
+
+    async fetchDeleteComment(context, id){
+		const response = await commentService.deleteComment(id, localStorage.getItem("token"));
+		if (response.status == 200 ) {
+			context.commit('SET_POSTS', response.data);
+			return true;
+		}
+	},
+
+
 
 }
 

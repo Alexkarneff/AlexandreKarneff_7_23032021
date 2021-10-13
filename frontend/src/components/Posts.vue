@@ -27,8 +27,8 @@
 
     <div class="postActionsContainer">
       <div class="commentContainer">
-        <a @click.prevent="triggerWritingComment" title="Commenter">
-          <p>Commenter</p>
+        <a @click.prevent="triggerWritingComment" title="Ajouter un commentaire !">
+         <strong> <p>Commenter</p> </strong>
         </a>
       </div>
     </div>
@@ -40,6 +40,11 @@
         placeholder="Écrire un commentaire "
         v-model="commentText"
       />
+
+      <a @click.prevent ="commentAPost"> 
+        <button> Envoyer ! 
+        </button>
+        </a>
     </div>
 
     <div v-show="comments.length > 0" v-for="comment in comments" :key="comment.id">
@@ -49,7 +54,7 @@
         :authorId="comment.userId"
         :commentId="comment.id"
         :commentText="comment.content"
-        @deleteAComment="deleteAComment"
+        @deleteComment="deleteAComment"
       >
       </Comment>
     </div>
@@ -76,7 +81,7 @@ export default {
     postText: String,
     comments: Array,
   },
-  emits: ["deleteAPost", "commentApost", "deleteAcomment"],
+  emits: ["deletePost", "commentPost", "deleteComment"],
   setup(props, context) {
     // Données et variables
     const store = useStore();
@@ -103,7 +108,7 @@ export default {
     // Suppression d'un post
     function deleteAPost() {
       const id = props.postId;
-      context.emit("deleteAPost", id);
+      context.emit("deletePost", id);
     }
 
     // Afficher sous le post l'input pour écrire un commentaire
@@ -123,14 +128,15 @@ export default {
         content: commentText.value,
         userId: store.state.user.id,
       };
-      context.emit("commentApost", commentData);
+      context.emit("commentPost", commentData);
       writingComment.value = false;
     }
 
     // Supprimer un commentaire
     function deleteAComment(id) {
-      context.emit("deleteAcomment", id);
+      context.emit("deleteComment", id);
     }
+
     return {
       formattedPublicationDate,
       authorIsUser,
@@ -179,7 +185,7 @@ export default {
 
   .rightSideHeader {
     button {
-      border-radius: 3px;
+      border-radius: 5px;
       color: white;
       height: 35px;
       z-index: 1;
@@ -285,6 +291,17 @@ export default {
     border-radius: 50%;
     // border: 1px red dashed;
   }
+      button {
+      border-radius: 5px;
+      color: white;
+      height: 35px;
+      z-index: 1;
+      cursor: pointer;
+      border: none;
+      font-weight: bold;
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+    }
 
   input {
     width: 85%;

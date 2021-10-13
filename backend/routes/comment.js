@@ -5,7 +5,7 @@ const commentController = require('../controllers/comment');
 
 
 // Créer un commentaire
-router.post('/', auth, commentController.addComment);
+router.post('/', commentController.addComment);
 
 // Supprimer un commentaire
 router.delete('/:id', auth, commentController.deleteComment);

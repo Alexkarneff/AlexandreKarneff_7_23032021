@@ -25,9 +25,9 @@
             :postTitle="post.title"
             :postText="post.text"
             :comments="post.Comments"
-            @commentApost="commentPost"
+            @commentPost="commentPost"
             @deletePost="postToDelete"
-            @deleteAcomment="deleteComment"
+            @deleteComment="deleteAComment"
           >
           </Posts>
         </div>
@@ -39,7 +39,7 @@
 <script>
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import Navbar from "@/components/Navbar.vue";
 import Posts from "@/components/Posts.vue";
 
@@ -53,7 +53,6 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const store = useStore();
-    const postDeleted = ref(false);
     const posts = computed(() => store.state.posts);
 
     async function getPosts() {
@@ -70,18 +69,31 @@ export default {
     async function postToDelete(id) {
       const deletion = await store.dispatch("fetchDeletePost", id);
       if (deletion) {
-        postDeleted.value = true;
-        setTimeout(() => {
-          postDeleted.value = false;
-        }, 2500);
+				await store.dispatch('fetchGetAllPosts');
       }
     }
+
+    async function commentPost(commentData) {
+			let created = await store.dispatch('fetchCreateComment', commentData);
+			if (created) {
+				await store.dispatch('fetchGetAllPosts');
+			}
+		}
+
+    async function deleteAComment(id) {
+			const deletion = await store.dispatch('fetchDeleteComment', id);
+      if (deletion) {
+				await store.dispatch('fetchGetAllPosts');
+			}
+		}
 
     return {
       goToCreatePost,
       posts,
       console,
       postToDelete,
+      commentPost,
+      deleteAComment,
     };
   },
 };
