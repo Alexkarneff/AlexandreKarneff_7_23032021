@@ -1,7 +1,7 @@
 <template>
 	<body>
 		<div class="leftSide">
-			<h1>Vous êtes maintent déconnecté</h1>
+			<h1>Vous êtes maintenant déconnecté</h1>
 
 			<h2>A la prochaine !</h2>
 
@@ -29,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 	body {
-		margin: 0;
+		margin: auto;
 		padding: 0;
 		height: 100vh;
 		align-content: center;
@@ -63,18 +63,21 @@ export default {
 		div.leftSide {
 			width: 100%;
 			h1 {
-				font-size: 24px;
+				font-size: 15px;
 			}
 			h2 {
-				font-size: 17px;
+				font-size: 14px;
 			}
+			a {
+				font-size: 15px;
+			}
+
 		}
 		.logoContainer {
-			position: absolute;
-			top: 5%;
-			left: 40%;
+			position: relative;
 			transform-origin: center;
 			width: 70px;
+
 		}
 	}
 </style>

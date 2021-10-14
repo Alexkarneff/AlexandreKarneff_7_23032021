@@ -60,7 +60,6 @@ header {
 	height: 80px;
 	z-index: 5000;
 	background-color: white;
-	// border: 1px blue solid;
 
 	.navbarContainer {
 		width: 100%;
@@ -88,7 +87,6 @@ nav {
 		a {
 			text-decoration: none;
 			color: black;
-			margin-left: 5px;
 
 			&:hover {
 				color: #AB1F03;
@@ -129,7 +127,7 @@ nav {
 		position: relative;
 		text-align: center;
 		clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-		transition: all 0.4s ease-in-out;
+		font-size: 14px;
 	}
 }
 </style>

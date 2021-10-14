@@ -23,7 +23,7 @@
 				<p> {{ currentUser.email }} </p>
 			</div>
 		
-			<div class="EndFormButtonsContainer">
+			<div class="ButtonContainer">
 				<button id="delete" @click.prevent="deleteAccount" alt="Delete account" title="Delete account">Delete account</button>
 			</div>
 		</div>
@@ -62,7 +62,7 @@ export default {
 		// Suppression de compte et redirection vers la page signup
 		const redirectToSignUp = route.query.redirect || '/signup';
 		async function deleteAccount() {
-			const id = route.params.id;
+			const id = store.state.user.id;
 			const accountDeleted = await store.dispatch('fetchDeleteAccount', id);
 			if (accountDeleted) {
 				router.push(redirectToSignUp);
@@ -76,8 +76,7 @@ export default {
 
 <style lang="scss" scoped>
 	.account {
-		width: 70%;
-		margin: 0 auto;
+		margin: auto;
 		padding: 3%;
 		text-decoration: none;
 
@@ -119,7 +118,7 @@ export default {
 			
 		}
 
-		.EndFormButtonsContainer {
+		.ButtonContainer {
 			width: 100%;
 			height: 210px;
 			display: flex;
@@ -191,13 +190,7 @@ export default {
 					margin: auto;
 				}
 
-				.EndFormButtonsContainer {
-					width: 85%;
-				}
 			}
-		}
-		button {
-			width: 50%;
 		}
 	}
 </style>

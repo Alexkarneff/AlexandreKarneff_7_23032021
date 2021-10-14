@@ -4,10 +4,10 @@
 	<form v-on:submit.prevent="logInUser">
 		
 		<label for="email"></label>
-		<input type="email" v-model="email" placeholder="Enter your email" id="email" ref="firstField" required><br>
+		<input type="email" v-model="email" placeholder="Entrez votre email" id="email" ref="firstField" required><br>
 		
 		<label for="password"></label>
-		<input v-model="password" id="password" type="password" placeholder="Enter your password" required><br/>
+		<input v-model="password" id="password" type="password" placeholder="Entrez votre mot de passe" required><br/>
 		
 		
 		<button :disabled="!isFormValid">Connexion</button>
@@ -55,8 +55,8 @@ const firstField = ref(null);
 <style lang="scss" scoped>
 	
 	h1 {
-		width: 85%;
-		margin: 20px auto 30px;
+		width: 70%;
+		margin: 20px auto ;
 		text-align: left;
 		color: #182D80;
 	}
@@ -65,7 +65,6 @@ const firstField = ref(null);
 		max-height: 65%;
 		margin: 10px auto;
 		text-align: left;
-		// border: 1px solid black;
 
 		.envelope {
 			margin-right: 10px;
@@ -75,14 +74,14 @@ const firstField = ref(null);
 		}
 
 		input {
-			width: 250px;
-			height: 35px;
+			width: 90%;
+			height: 30px;
 			margin: 10px auto 20px;
 			padding-left: 2%;
 			outline: none;
 		}
 		button {
-			width: 150px;
+			width: 95%;
 			margin: 30px auto 0;
 			height: auto;
 			padding: 2% 1%;
@@ -101,10 +100,10 @@ const firstField = ref(null);
 		}
 
 		form {
-			height: 70%;
+			height: 75%;
 
-			input {
-				width: 200px;
+			button {
+				font-size: 15px;
 			}
 		}
 	}

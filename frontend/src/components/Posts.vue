@@ -314,10 +314,18 @@ export default {
     outline: none;
     padding-left: 10px;
 
-    &:focus {
-      box-shadow: 1px 1px 5px black;
-      // border: black 1px solid;
-    }
   }
 }
+
+@media screen and (max-width: 599px) {
+
+			.rightSideHeader {
+
+        button {
+        margin-left: 10px;
+				font-size: 10px;
+				width: 60px;
+				padding: 0;
+			}}
+	}
 </style>

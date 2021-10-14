@@ -7,6 +7,7 @@
 							<router-link to="/login">Se connecter</router-link>
 						</p>
 				</div>
+				<br>
 				<router-link to="/home"> Retour à l'accueil </router-link>
 			</div>
 	</body>
@@ -70,33 +71,22 @@ export default {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			height: 100vh;
 	
-			.logoContainer {
-				position: absolute;
-				top: 3%;
-				width: 110px;
-			}
 			.signupForm {
 				width: 100%;
-				position: absolute;
-				top: 20%;
-
-				.signFormContainer {
-					height: 550px;
-					width: 550px;
-					position: relative;
-					top: 0;
-					left: 0;
-					margin: 0;
-				}
-			}
-
-			p.toLogIn {
-				width: 80%;
-				// margin: 20px auto 0;
 			}
 		}
 	}
+
+		@media screen and (max-width: 599px) {
+
+		.signFormContainer {
+			width: 250px;
+		}
+
+		p.toLogIn {
+		font-size: 15px;
+		}
+		}
 
 </style>

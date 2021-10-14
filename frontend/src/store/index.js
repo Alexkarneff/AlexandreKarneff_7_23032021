@@ -88,7 +88,7 @@ const actions = {
     },
 
 	async fetchDeleteAccount (context, id) {
-		const response = await userService.deleteAccount(id, localStorage.getItem("token"));
+		const response = await userService.deleteAccount( id ,localStorage.getItem("token"));
 		if (response.status === 200) {
 			context.commit('CLEAR_STORE');
 			return true;

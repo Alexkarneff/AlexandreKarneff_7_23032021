@@ -55,7 +55,7 @@ const routes = [
     path: "/logout",
     name: "logout",
     component: logout,
-    meta: { auth: true },
+    meta: { guest: true },
   }
 
 ];

@@ -65,7 +65,7 @@ export default {
 	}
 
 	.commentContent {
-		margin-left: 10px;
+		margin-left: 5px;
 		width: 90%;
 		padding: 10px 15px;
 		min-height: 50px;
@@ -115,5 +115,22 @@ export default {
 	}
 	.orange {
 		color: #AB1F03;
+	}
+
+
+	@media screen and (max-width: 599px) {
+
+		.commentContent {
+			width: 70%;
+
+		}
+			.rightSideHeader {
+
+                button {
+				font-size: 10px;
+				width: 55px;
+				padding: 0;
+				margin-left: 5px;
+			}}
 	}
 </style>

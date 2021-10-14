@@ -99,19 +99,8 @@ setup() {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-
-			.logoContainer {
-				position: absolute;
-				top: 3%;
-				width: 110px;
-			}
 			.loginContainer {
 				width: 100%;
-				.logFormContainer {
-					position: relative;
-					top: 0;
-					left: 0;
-				}
 			}
 		}
 	}
@@ -119,8 +108,10 @@ setup() {
 	@media screen and (max-width: 599px) {
 		.logFormContainer {
 			height: 400px;
-			width: 300px;
-			// margin: 5% auto;
+			width: 250px;
 		}
+			p.toLogIn, p.toSignUp {
+		font-size: 15px;
+	}
 	}
 </style>

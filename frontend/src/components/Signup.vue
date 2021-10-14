@@ -4,7 +4,7 @@
 
 	<form v-on:submit.prevent="createUser">
 		<label for="email"></label>
-		<input type="text" v-model="email" placeholder="Entrez votres adresse mail" id="email" ref="firstField"><br/>
+		<input type="text" v-model="email" placeholder="Entrez votre adresse email" id="email" ref="firstField"><br/>
 
 		<label for="firstName"></label>
 		<input type="text" v-model="firstName" id="firstName" placeholder="Entrez votre prénom"><br/>
@@ -106,7 +106,7 @@ export default {
 		color: #182D80;
 	}
 	form {
-		width: 85%;
+		width: 95%;
 		margin: 10px auto;
 		text-align: left;
 		// border: 1px solid black;
@@ -116,14 +116,14 @@ export default {
 		}
 
 		input, select {
-			width: 250px;
+			width: 90%;
 			height: 35px;
 			margin: 10px auto 20px;
 			padding-left: 2%;
 			outline: none;
 		}
 		button {
-			width: 180px;
+			width: 95%;
 			margin: 30px auto 0;
 			height: auto;
 			padding: 3.5% 2%;
@@ -148,12 +148,10 @@ export default {
 		}
 		form {
 			input, select, option {
-				width: 450px;
 				font-size: 12px;
 			}
 
 			button {
-				width: 200px;
 				font-size: 16px;
 				margin-top: 20px;
 			}
@@ -163,14 +161,12 @@ export default {
 		form {
 			text-align: center;
 			input, select, option {
-				width: 200px;
 				font-size: 12px;
 				height: 30px;
 			}
 
 			button {
-				width: 200px;
-				font-size: 16px;
+				font-size: 15px;
 				margin-top: 20px;
 			}
 		}

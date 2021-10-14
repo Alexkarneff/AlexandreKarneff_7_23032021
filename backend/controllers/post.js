@@ -85,11 +85,6 @@ exports.getAllPosts = (req, res, next) => {
         });
 };
 
-// Récupérer un post en particulier
-exports.getPost = (req, res, next) => {
-
-};
-
 // Supprimer un post
 
 exports.deletePost = (req, res, next) => {

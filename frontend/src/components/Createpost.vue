@@ -31,6 +31,8 @@ export default {
 		const content = ref("");
 		const file = ref("");
 		const firstField = ref(null);
+		
+
 
 		const postFormData = new FormData();
 		
@@ -131,9 +133,6 @@ form {
 		}
 	}
 
-
-
-
 	@media screen and (max-width: 1200px) {
 		h1 {
 			font-size: 24px;
@@ -141,7 +140,7 @@ form {
 		}
 		form {
 			input, select, option {
-				width: 450px;
+				width: 400px;
 				font-size: 12px;
 			}
 
@@ -156,14 +155,19 @@ form {
 		form {
 			text-align: center;
 			input, select, option {
-				width: 200px;
+				width: 150px;
 				font-size: 12px;
 				height: 30px;
 			}
+			.container {
+				label {
+					font-size: 12px;
+				}
+			}
 
 			button {
-				width: 200px;
-				font-size: 16px;
+				width: 150px;
+				font-size: 15px;
 				margin-top: 20px;
 			}
 		}
