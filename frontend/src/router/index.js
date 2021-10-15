@@ -31,7 +31,7 @@ const routes = [
     path: "/login",
     name: "login",
     component: logIn,
-    meta: { guest: false },
+    meta: { guest: true },
   },
   {
 		path: "/post",
