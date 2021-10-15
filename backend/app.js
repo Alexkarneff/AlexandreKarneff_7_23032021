@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const db = require("./models");
+const helmet = require("./helmet");
 
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
@@ -26,7 +27,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-
+app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
